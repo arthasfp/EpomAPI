@@ -22,6 +22,17 @@ import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 public class ParsingDemo {
+    private String hash;
+    private long timestamp;
+    private String username;
+    private String password;
+    private int[] publishingCategories;
+
+    public ParsingDemo(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public static void main(String[] args) {
         new ReadPlacesFeedTask().doInBackground("/rest-api/sites.do");
 
