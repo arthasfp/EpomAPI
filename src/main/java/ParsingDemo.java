@@ -23,14 +23,7 @@ import java.util.logging.Logger;
 
 public class ParsingDemo {
     public static void main(String[] args) {
-        new ReadPlacesFeedTask().onPostExecute("{\n" +
-                "   \"error\": {\n" +
-                "      \"message\": \"An active access token must be used to query information about the current user.\",\n" +
-                "      \"type\": \"OAuthException\",\n" +
-                "      \"code\": 2500,\n" +
-                "      \"fbtrace_id\": \"AEJgiDH3PfJ\"\n" +
-                "   }\n" +
-                "}");
+        new ReadPlacesFeedTask().doInBackground("/rest-api/sites.do");
 
     }
     public static String readJSONFeed(String URL) {
