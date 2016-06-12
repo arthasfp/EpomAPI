@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -30,14 +31,16 @@ public class EpomService {
         this.user = user;
     }
 
-    private void getSitesData() throws NoSuchAlgorithmException, IOException {
-
-        int[] publishingCategories = null;
+    private void getSitesData(int[] publishingCategories) throws NoSuchAlgorithmException, IOException {
+        String stringFromPublCategories = Arrays.toString(publishingCategories);
+        stringFromPublCategories = stringFromPublCategories.replace("[", "");
+        stringFromPublCategories = stringFromPublCategories.replace("]", "");
+        stringFromPublCategories = stringFromPublCategories.replace(" ", "");
         URL url = null;
-        if (publishingCategories.equals(null)) {
+        if (publishingCategories == null) {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername());
         } else {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername()+ "&publishingCategories=" + publishingCategories);
+            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername()+ "&publishingCategories=" + stringFromPublCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setHostnameVerifier(new HostnameVerifier() {
@@ -104,7 +107,7 @@ public class EpomService {
         SSLContext.setDefault(ctx);
 
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
-        epomService.getSitesData();
+        epomService.getSitesData(null);
         epomService.createZone("someName", "SomeShortDescription", 2078);
     }
 
