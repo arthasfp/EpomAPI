@@ -63,23 +63,23 @@ public class EpomService {
     }
 
     private void createZone(String hash, long timestamp, String username, String name, String description, int id) throws NoSuchAlgorithmException, IOException {
-        URL url2 = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + hash + "&timestamp=" + timestamp + "&username=" + username + "name=" + name + "&description=" + description + "&siteId=" + id);
-        HttpsURLConnection conn2 = (HttpsURLConnection) url2.openConnection();
-        conn2.setRequestMethod("POST");
-        conn2.setHostnameVerifier(new HostnameVerifier() {
+        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + hash + "&timestamp=" + timestamp + "&username=" + username + "name=" + name + "&description=" + description + "&siteId=" + id);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String arg0, SSLSession arg1) {
                 return true;
             }
         });
-        System.out.println(conn2.getResponseCode());
-        InputStream inputStream2 = conn2.getInputStream();
-        String myString2 = IOUtils.toString(inputStream2, "UTF-8");
-        myString2 = myString2.replace("{", "");
-        myString2 = myString2.replace("}", "");
-        System.out.println(myString2);
-        conn2.disconnect();
-        inputStream2.close();
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        myString = myString.replace("{", "");
+        myString = myString.replace("}", "");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
 
     }
 
