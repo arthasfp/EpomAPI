@@ -42,7 +42,8 @@ public class EpomService {
         } else {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&publishingCategories=" + stringFromPublCategories);
         }
-        HttpsURLConnection conn = getURLConnection(url);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        getVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         printWebSites(inputStream);
@@ -53,9 +54,9 @@ public class EpomService {
 
     private void createZone(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
         URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
-        HttpsURLConnection conn = getURLConnection(url);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-
+        getVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         String myString = IOUtils.toString(inputStream, "UTF-8");
@@ -78,15 +79,13 @@ public class EpomService {
         }
     }
 
-    private HttpsURLConnection getURLConnection(URL url) throws IOException {
-        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+    private void getVerifierForConnection(HttpsURLConnection conn) {
         conn.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String arg0, SSLSession arg1) {
                 return true;
             }
         });
-        return conn;
     }
 
     public long getTimestamp() {
