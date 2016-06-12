@@ -20,12 +20,15 @@ public class EpomService {
         this.user = user;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public static void main(String[] args) throws Exception {
+        SSLContext ctx = SSLContext.getInstance("TLS");
+        ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()}, new SecureRandom());
+        SSLContext.setDefault(ctx);
 
-    public void setUser(User user) {
-        this.user = user;
+        EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
+        epomService.getSitesData(null);
+        System.out.println();
+        epomService.createZone("someName", "SomeShortDescription", 2078);
     }
 
     private void getSitesData(int[] publishingCategories) throws NoSuchAlgorithmException, IOException {
@@ -40,7 +43,7 @@ public class EpomService {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&publishingCategories=" + stringFromPublCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-        setVerifierForConnection(conn);
+        getVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         printWebSites(inputStream);
@@ -53,7 +56,7 @@ public class EpomService {
         URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-        setVerifierForConnection(conn);
+        getVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         String myString = IOUtils.toString(inputStream, "UTF-8");
@@ -76,7 +79,7 @@ public class EpomService {
         }
     }
 
-    private void setVerifierForConnection(HttpsURLConnection conn) {
+    private void getVerifierForConnection(HttpsURLConnection conn) {
         conn.setHostnameVerifier(new HostnameVerifier() {
             @Override
             public boolean verify(String arg0, SSLSession arg1) {
@@ -106,16 +109,7 @@ public class EpomService {
     }
 
 
-    public static void main(String[] args) throws Exception {
-        SSLContext ctx = SSLContext.getInstance("TLS");
-        ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()}, new SecureRandom());
-        SSLContext.setDefault(ctx);
 
-        EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
-        epomService.getSitesData(null);
-        System.out.println();
-        epomService.createZone("someName", "SomeShortDescription", 2078);
-    }
 
 
     private static class DefaultTrustManager implements X509TrustManager {
