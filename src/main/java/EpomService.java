@@ -109,9 +109,6 @@ public class EpomService {
     }
 
 
-
-
-
     private static class DefaultTrustManager implements X509TrustManager {
 
         @Override
