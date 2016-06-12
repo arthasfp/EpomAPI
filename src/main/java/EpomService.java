@@ -17,6 +17,7 @@ public class EpomService {
 
     long timestamp = new Date().getTime();
 
+
     public EpomService(User user) {
         this.user = user;
     }
@@ -60,8 +61,8 @@ public class EpomService {
         inputStream.close();
     }
 
-    private void createZone(String hash, long timestamp, String username, String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
-        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + hash + "&timestamp=" + timestamp + "&username=" + username + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
+    private void createZone(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setHostnameVerifier(new HostnameVerifier() {
@@ -81,7 +82,9 @@ public class EpomService {
     }
 
     public String getHash() throws NoSuchAlgorithmException {
+        System.out.println(timestamp);
         String hash = getMD5(getMD5(user.getPassword()) + String.valueOf(timestamp));
+        System.out.println(hash);
         return hash;
     }
 
@@ -104,7 +107,7 @@ public class EpomService {
 
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
         epomService.getSitesData();
-        epomService.createZone(epomService.getHash(), epomService.timestamp, epomService.getUser().getUsername(), "someName", "Some short description", 2078);
+        epomService.createZone("someName", "Some short description", 2078);
     }
 
 
