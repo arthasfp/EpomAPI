@@ -61,7 +61,7 @@ public class EpomService {
     }
 
     private void createZone(String hash, long timestamp, String username, String name, String description, int id) throws NoSuchAlgorithmException, IOException {
-        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + hash + "&timestamp=" + timestamp + "&username=" + username + "name=" + name + "&description=" + description + "&siteId=" + id);
+        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + hash + "&timestamp=" + timestamp + "&username=" + username + "&name=" + name + "&description=" + description + "&siteId=" + id);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setHostnameVerifier(new HostnameVerifier() {
