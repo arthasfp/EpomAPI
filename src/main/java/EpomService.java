@@ -14,10 +14,8 @@ import java.util.Date;
 
 public class EpomService {
     private User user;
+
     long timestamp = new Date().getTime();
-
-
-
 
     public EpomService(User user) {
         this.user = user;
@@ -33,11 +31,11 @@ public class EpomService {
 
     private void getSitesData() throws NoSuchAlgorithmException, IOException {
 
-        int [] publishingCategories = null;
+        int[] publishingCategories = null;
         URL url = null;
-        if(publishingCategories == null){
+        if (publishingCategories == null) {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=apimaster");
-        }else {
+        } else {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=apimaster&publishingCategories=" + publishingCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -53,9 +51,9 @@ public class EpomService {
         String temp = myString.replace("[", "");
         temp = temp.replace("]", "");
         String[] array = temp.split("},");
-        for (String sepString: array){
-            sepString = sepString.replace("{","");
-            sepString = sepString.replace("}","");
+        for (String sepString : array) {
+            sepString = sepString.replace("{", "");
+            sepString = sepString.replace("}", "");
             System.out.println(sepString);
         }
         conn.disconnect();
@@ -80,7 +78,6 @@ public class EpomService {
         System.out.println(myString);
         conn.disconnect();
         inputStream.close();
-
     }
 
     public String getHash() throws NoSuchAlgorithmException {
@@ -108,8 +105,6 @@ public class EpomService {
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
         epomService.getSitesData();
         epomService.createZone(epomService.getHash(), epomService.timestamp, epomService.getUser().getUsername(), "someName", "Some short description", 2078);
-
-
     }
 
 
