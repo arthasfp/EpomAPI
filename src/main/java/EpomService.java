@@ -35,9 +35,9 @@ public class EpomService {
         int[] publishingCategories = null;
         URL url = null;
         if (publishingCategories == null) {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=apimaster");
+            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername());
         } else {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=apimaster&publishingCategories=" + publishingCategories);
+            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername()+ "&publishingCategories=" + publishingCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setHostnameVerifier(new HostnameVerifier() {
@@ -82,9 +82,7 @@ public class EpomService {
     }
 
     public String getHash() throws NoSuchAlgorithmException {
-        System.out.println(timestamp);
         String hash = getMD5(getMD5(user.getPassword()) + String.valueOf(timestamp));
-        System.out.println(hash);
         return hash;
     }
 
@@ -107,7 +105,7 @@ public class EpomService {
 
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
         epomService.getSitesData();
-        epomService.createZone("someName", "Some short description", 2078);
+        epomService.createZone("someName", "SomeShortDescription", 2078);
     }
 
 
