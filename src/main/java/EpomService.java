@@ -34,7 +34,7 @@ public class EpomService {
 
         int[] publishingCategories = null;
         URL url = null;
-        if (publishingCategories == null) {
+        if (publishingCategories.equals(null)) {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername());
         } else {
             url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername()+ "&publishingCategories=" + publishingCategories);
