@@ -52,11 +52,11 @@ public class EpomService {
         String myString = IOUtils.toString(inputStream, "UTF-8");
         String temp = myString.replace("[", "");
         temp = temp.replace("]", "");
-        String[] a = temp.split("},");
-        for (String b: a){
-            b = b.replace("{","");
-            b = b.replace("}","");
-            System.out.println(b);
+        String[] array = temp.split("},");
+        for (String sepString: array){
+            sepString = sepString.replace("{","");
+            sepString = sepString.replace("}","");
+            System.out.println(sepString);
         }
         conn.disconnect();
         inputStream.close();
