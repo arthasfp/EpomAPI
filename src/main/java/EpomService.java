@@ -16,9 +16,6 @@ import java.util.Date;
 public class EpomService {
     private User user;
 
-    long timestamp = new Date().getTime();
-
-
     public EpomService(User user) {
         this.user = user;
     }
@@ -38,42 +35,25 @@ public class EpomService {
         stringFromPublCategories = stringFromPublCategories.replace(" ", "");
         URL url = null;
         if (publishingCategories == null) {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername());
+            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
         } else {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername()+ "&publishingCategories=" + stringFromPublCategories);
+            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&publishingCategories=" + stringFromPublCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-        conn.setHostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String arg0, SSLSession arg1) {
-                return true;
-            }
-        });
+        setVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
-        String myString = IOUtils.toString(inputStream, "UTF-8");
-        String temp = myString.replace("[", "");
-        temp = temp.replace("]", "");
-        String[] array = temp.split("},");
-        for (String sepString : array) {
-            sepString = sepString.replace("{", "");
-            sepString = sepString.replace("}", "");
-            System.out.println(sepString);
-        }
+        printWebSites(inputStream);
         conn.disconnect();
         inputStream.close();
     }
 
+
     private void createZone(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
-        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + timestamp + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
+        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
-        conn.setHostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String arg0, SSLSession arg1) {
-                return true;
-            }
-        });
+        setVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         String myString = IOUtils.toString(inputStream, "UTF-8");
@@ -84,8 +64,33 @@ public class EpomService {
         inputStream.close();
     }
 
+    private void printWebSites(InputStream inputStream) throws IOException {
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        String temp = myString.replace("[", "");
+        temp = temp.replace("]", "");
+        String[] array = temp.split("},");
+        for (String sepString : array) {
+            sepString = sepString.replace("{", "");
+            sepString = sepString.replace("}", "");
+            System.out.println(sepString);
+        }
+    }
+
+    private void setVerifierForConnection(HttpsURLConnection conn) {
+        conn.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1) {
+                return true;
+            }
+        });
+    }
+
+    public long getTimestamp() {
+        return new Date().getTime();
+    }
+
     public String getHash() throws NoSuchAlgorithmException {
-        String hash = getMD5(getMD5(user.getPassword()) + String.valueOf(timestamp));
+        String hash = getMD5(getMD5(user.getPassword()) + String.valueOf(getTimestamp()));
         return hash;
     }
 
@@ -107,7 +112,7 @@ public class EpomService {
         SSLContext.setDefault(ctx);
 
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
-        epomService.getSitesData(null);
+        epomService.getSitesData(new int[]{1, 2, 3});
         epomService.createZone("someName", "SomeShortDescription", 2078);
     }
 
