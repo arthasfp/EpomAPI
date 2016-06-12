@@ -112,7 +112,8 @@ public class EpomService {
         SSLContext.setDefault(ctx);
 
         EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
-        epomService.getSitesData(new int[]{1, 2, 3});
+        epomService.getSitesData(null);
+        System.out.println();
         epomService.createZone("someName", "SomeShortDescription", 2078);
     }
 
