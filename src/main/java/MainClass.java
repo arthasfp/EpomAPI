@@ -11,11 +11,11 @@ import java.security.cert.X509Certificate;
 import java.util.Date;
 
 
-public class YOLO {
+public class MainClass {
     private User user;
 
 
-    public YOLO(User user) {
+    public MainClass(User user) {
         this.user = user;
     }
 
