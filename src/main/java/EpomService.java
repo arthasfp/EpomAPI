@@ -25,14 +25,13 @@ public class EpomService {
         ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()}, new SecureRandom());
         SSLContext.setDefault(ctx);
 
-        EpomService epomService = new EpomService(new User("apimaster", "apimaster", "https://n101.epom.com"));
-        epomService.getSitesData(null);
-        System.out.println();
-        epomService.createZone("someName", "SomeShortDescription", 2078);
+        EpomService epomService = new EpomService(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+        epomService.createStandartPlacement("someName", 1282);
     }
 
-    private void createStandartPlacement(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
-        URL url = new URL(user.getNetwork() + "/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
+    private void createStandartPlacement(String name, int zoneId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placements/update/standard.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
+                + "&zoneId=" + zoneId + "&type=STANDARD_SITE_PLACEMENTS" + "&name=" + name + "&size.adUnit=" + Ad_Unit.LEADERBOARD);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         getVerifierForConnection(conn);
@@ -105,7 +104,7 @@ public class EpomService {
     }
 
     public long getTimestamp() {
-        return new Date().getTime();
+          return new Date().getTime();
     }
 
     public String getHash() throws NoSuchAlgorithmException {
