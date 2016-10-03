@@ -27,6 +27,7 @@ public class EpomService {
 
         EpomService epomService = new EpomService(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
         epomService.createStandartPlacement("someName", 1282);
+        epomService.deletePlacement(5695);
     }
 
     private void createStandartPlacement(String name, int zoneId) throws NoSuchAlgorithmException, IOException {
@@ -40,6 +41,21 @@ public class EpomService {
         String myString = IOUtils.toString(inputStream, "UTF-8");
         myString = myString.replace("{", "");
         myString = myString.replace("}", "");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    private void deletePlacement(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placements/" + placementId + "/delete.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+//        myString = myString.replace("{", "");
+//        myString = myString.replace("}", "");
         System.out.println(myString);
         conn.disconnect();
         inputStream.close();
