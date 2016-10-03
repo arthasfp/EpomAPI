@@ -46,6 +46,12 @@ public class EpomService {
         inputStream.close();
     }
 
+    /**
+     * Deletes placement by ID number.
+     * The ID number must be specified as method's param.
+     *
+     */
+
     private void deletePlacement(int placementId) throws NoSuchAlgorithmException, IOException {
         URL url = new URL(user.getNetwork() + "/rest-api/placements/" + placementId + "/delete.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
