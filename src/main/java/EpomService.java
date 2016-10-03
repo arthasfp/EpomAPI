@@ -53,9 +53,9 @@ public class EpomService {
         stringFromPublCategories = stringFromPublCategories.replace(" ", "");
         URL url = null;
         if (publishingCategories == null) {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+            url = new URL(user.getNetwork() + "/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
         } else {
-            url = new URL("https://n29.epom.com/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&publishingCategories=" + stringFromPublCategories);
+            url = new URL(user.getNetwork() + "/rest-api/sites.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&publishingCategories=" + stringFromPublCategories);
         }
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         getVerifierForConnection(conn);
@@ -68,7 +68,7 @@ public class EpomService {
 
 
     private void createZone(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
-        URL url = new URL("https://n29.epom.com/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
+        URL url = new URL(user.getNetwork() + "/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         getVerifierForConnection(conn);
