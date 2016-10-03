@@ -1,14 +1,13 @@
-import java.util.ArrayList;
-
 public class User {
 
     private String username;
     private String password;
+    private String network;
 
-
-    public User(String username, String password) {
+    public User(String username, String password, String network) {
         this.username = username;
         this.password = password;
+        this.network = network;
     }
 
     public String getUsername() {
@@ -19,4 +18,7 @@ public class User {
         return password;
     }
 
+    public String getNetwork() {
+        return network;
+    }
 }

@@ -25,11 +25,27 @@ public class EpomService {
         ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()}, new SecureRandom());
         SSLContext.setDefault(ctx);
 
-        EpomService epomService = new EpomService(new User("apimaster", "apimaster"));
+        EpomService epomService = new EpomService(new User("apimaster", "apimaster", "https://n101.epom.com"));
         epomService.getSitesData(null);
         System.out.println();
         epomService.createZone("someName", "SomeShortDescription", 2078);
     }
+
+    private void createStandartPlacement(String name, String description, int siteId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/zones/update.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&name=" + name + "&description=" + description + "&siteId=" + siteId);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        myString = myString.replace("{", "");
+        myString = myString.replace("}", "");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
 
     private void getSitesData(int[] publishingCategories) throws NoSuchAlgorithmException, IOException {
         String stringFromPublCategories = Arrays.toString(publishingCategories);
