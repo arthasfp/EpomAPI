@@ -29,8 +29,17 @@ public class EpomService {
 //        epomService.createStandartPlacement("someName", 1282);
 //        epomService.deletePlacement(5695);
 //        epomService.getPlacementInvocationCode("4f6dab177059c8900bfa5e20b2566b29");
-        epomService.getPlacementSummary();
+//        epomService.getPlacementSummary();
+//        epomService.disableSecuritySettingsForPlacement(10314);
     }
+
+
+    /**
+     * Doesn't work
+     * 400 status
+     *
+     */
+
 
     private void createStandartPlacement(String name, int zoneId) throws NoSuchAlgorithmException, IOException {
         URL url = new URL(user.getNetwork() + "/rest-api/placements/update/standard.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
@@ -110,6 +119,24 @@ public class EpomService {
     }
 
 
+    /**
+     * Disables all security settings for the Placement with given ID.
+     * The ID number must be specified as method's param.
+     *
+     */
+
+    private void disableSecuritySettingsForPlacement(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/security-settings/placement/disable.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&id=" + placementId);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
     private void getSitesData(int[] publishingCategories) throws NoSuchAlgorithmException, IOException {
         String stringFromPublCategories = Arrays.toString(publishingCategories);
