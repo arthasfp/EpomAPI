@@ -26,8 +26,9 @@ public class EpomService {
         SSLContext.setDefault(ctx);
 
         EpomService epomService = new EpomService(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
-        epomService.createStandartPlacement("someName", 1282);
-        epomService.deletePlacement(5695);
+//        epomService.createStandartPlacement("someName", 1282);
+//        epomService.deletePlacement(5695);
+        epomService.getPlacementInvocationCode("4f6dab177059c8900bfa5e20b2566b29");
     }
 
     private void createStandartPlacement(String name, int zoneId) throws NoSuchAlgorithmException, IOException {
@@ -60,8 +61,28 @@ public class EpomService {
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
         String myString = IOUtils.toString(inputStream, "UTF-8");
-//        myString = myString.replace("{", "");
-//        myString = myString.replace("}", "");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+
+     /**
+     * Gets invocation code of placement by Placement Key.
+     * The Placement Key must be specified as method's param.
+     * Placement Key can be replaced with md5 value of site ID, zone ID, placement ID
+     *
+     */
+
+    private void getPlacementInvocationCode(String placementKey) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementKey + "/code.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username="
+                + user.getUsername() + "&t=" + InvocationCode.JS_SYNC);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
         System.out.println(myString);
         conn.disconnect();
         inputStream.close();
