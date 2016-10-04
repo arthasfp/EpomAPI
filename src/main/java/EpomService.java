@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -120,6 +121,28 @@ public class EpomService {
 
 
     /**
+     * Not finished
+     *
+     * Update Security Settings for the Placement with given ID.
+     * The ID number must be specified as method's param.
+     *
+     */
+
+    private void updateSecuritySettingsForPlacement(int placementId, boolean mediaScannerOn, int year, int month, int day) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/security-settings/placement/save.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
+                + "&id=" + placementId + "&mediaScannerOn=" + mediaScannerOn + "&mediaScannerStartDate" + getMediaScannerDate(year, month, day) + );
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    /**
      * Disables all security settings for the Placement with given ID.
      * The ID number must be specified as method's param.
      *
@@ -213,6 +236,10 @@ public class EpomService {
             sb.append(Integer.toString((aByteData & 0xff) + 0x100, 16).substring(1));
         }
         return sb.toString();
+    }
+
+    private LocalDate getMediaScannerDate(int year, int month, int day){
+        return LocalDate.of(year, month, day);
     }
 
 
