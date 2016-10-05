@@ -32,6 +32,8 @@ public class EpomService {
 //        epomService.getPlacementInvocationCode("4f6dab177059c8900bfa5e20b2566b29");
 //        epomService.getPlacementSummary();
 //        epomService.disableSecuritySettingsForPlacement(10314);
+//        epomService.updateSecuritySettingsForPlacement(10314, false, "2016-10-05", "2016-10-06", 24, false, "2016-10-05", "2016-10-06", 5.0, 50);
+        epomService.getSecuritySettingsForPlacement(10314);
     }
 
 
@@ -119,20 +121,43 @@ public class EpomService {
         inputStream.close();
     }
 
+    /**
+     * Get security settings for the Placement with given ID.
+     * The ID number must be specified as method's param.
+     *
+     */
+
+    private void getSecuritySettingsForPlacement(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/security-settings/placement.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&id=" + placementId);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
     /**
      * Not finished
      *
      * Update Security Settings for the Placement with given ID.
-     * The ID number must be specified as method's param.
+     * countries – (optional) array of country codes.
+     * adEvents – (optional) array of ad events to set. Available values: REQUEST, IMPRESSION, CLICK, ACTION.
      *
      */
 
-    private void updateSecuritySettingsForPlacement(int placementId, boolean mediaScannerOn, int year, int month, int day) throws NoSuchAlgorithmException, IOException {
+    private void updateSecuritySettingsForPlacement(int placementId, boolean mediaScannerOn, String mediaScannerStartDate, String mediaScannerEndDate, int mediaScannerRate,
+                                                    boolean forensiqOn, String dateFrom, String dateTo, double trafficShare, int trafficQualityMaxRisk) throws NoSuchAlgorithmException, IOException {
         URL url = new URL(user.getNetwork() + "/rest-api/security-settings/placement/save.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
-                + "&id=" + placementId + "&mediaScannerOn=" + mediaScannerOn + "&mediaScannerStartDate" + getMediaScannerDate(year, month, day)  );
+          + "&id=" + placementId + "&mediaScannerOn=" + mediaScannerOn + "&mediaScannerStartDate=" + getDateFromString(mediaScannerStartDate) + "&mediaScannerEndDate=" + getDateFromString(mediaScannerEndDate)
+                + "&mediaScannerRate=" + mediaScannerRate + "&forensiqOn=" + forensiqOn + "&dateFrom=" + getDateFromString(dateFrom) + "&dateTo=" + getDateFromString(dateTo)
+                + "&trafficQualityFiltering=" + TrafficQualityFilter.ACCEPT_ALL +"&trafficShare=" + trafficShare + "&trafficQualityMaxRisk=" + trafficQualityMaxRisk );
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
         getVerifierForConnection(conn);
         System.out.println(conn.getResponseCode());
         InputStream inputStream = conn.getInputStream();
@@ -238,8 +263,15 @@ public class EpomService {
         return sb.toString();
     }
 
-    private LocalDate getMediaScannerDate(int year, int month, int day){
-        return LocalDate.of(year, month, day);
+    private LocalDate getDateFromString(String value){
+        String[] newValue = value.split("-");
+        for (String a: newValue){
+            System.out.println(a);
+        }
+        if (newValue.length > 3){
+            System.out.println("Wrong input!!!");
+        }
+        return LocalDate.of(Integer.parseInt(newValue[0]), Integer.parseInt(newValue[1]), Integer.parseInt(newValue[2]));
     }
 
 
