@@ -130,7 +130,7 @@ public class EpomService {
 
     private void updateSecuritySettingsForPlacement(int placementId, boolean mediaScannerOn, int year, int month, int day) throws NoSuchAlgorithmException, IOException {
         URL url = new URL(user.getNetwork() + "/rest-api/security-settings/placement/save.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
-                + "&id=" + placementId + "&mediaScannerOn=" + mediaScannerOn + "&mediaScannerStartDate" + getMediaScannerDate(year, month, day) + );
+                + "&id=" + placementId + "&mediaScannerOn=" + mediaScannerOn + "&mediaScannerStartDate" + getMediaScannerDate(year, month, day)  );
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         getVerifierForConnection(conn);
