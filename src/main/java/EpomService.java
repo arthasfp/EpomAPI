@@ -33,7 +33,8 @@ public class EpomService {
 //        epomService.getPlacementSummary();
 //        epomService.disableSecuritySettingsForPlacement(10314);
 //        epomService.updateSecuritySettingsForPlacement(10314, false, "2016-10-05", "2016-10-06", 24, false, "2016-10-05", "2016-10-06", 5.0, 50);
-        epomService.getSecuritySettingsForPlacement(10314);
+//        epomService.getSecuritySettingsForPlacement(10314);
+        epomService.deletePlacementBidFloor(10314, "UA");
     }
 
 
@@ -122,6 +123,30 @@ public class EpomService {
     }
 
     /**
+     * Not finished
+     *
+     * Deletes Bid Floor for the given Placement ID.
+     * Requires Enabled permission for INVENTORY and BID FLOOR MANAGEMENT permissions.
+     * The ID number and ISO code of coutry must be specified as method's param.
+     *
+     */
+
+    private void deletePlacementBidFloor(int placementId, String ISOCountryCode) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/bid-floor/placement/" + placementId + "/delete.do?hash=" + getHash()
+                + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername() + "&country=" + ISOCountryCode);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+
+     /**
      * Get security settings for the Placement with given ID.
      * The ID number must be specified as method's param.
      *
