@@ -1,0 +1,47 @@
+<?php
+	define("DEBUG",false);
+    ini_set('max_execution_time', 1200);
+    /*Initiating username and password variables, generating current timestamp and hash*/
+
+    $username = "berezhnyi1234";
+    $password = "211111";
+    $timestamp  = round(microtime(true) * 1000);
+    $hash = md5(md5($password).$timestamp);
+
+    /*Constructing API url which fetches data in HTML format*/
+    $url="https://n101.epom.com/rest-api/placements/update/video.do";
+
+
+    /*Specifying that we want the report to be for yesterday, grouped by advertiser and publisher*/
+    $post_data = array(
+    "hash" => $hash,
+    "timestamp" => $timestamp,
+	"username" => $username,
+    "zoneId"" => "1282",
+    "type" => "VIDEO_PLACEMENTS, VIDEO_BANNERS",
+    "name" => "TestScript",
+    "videoFormats" => "PRE_ROLL",
+    "description" => "test"
+    );
+
+    /*specifying curl options*/
+    $options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query($post_data), //POST request body parameters
+    CURLOPT_HTTPHEADER => array('Content-type: application/x-www-form-urlencoded'),
+    CURLOPT_RETURNTRANSFER => true
+    );
+
+    /*connection initiation*/
+    $curl = curl_init();
+
+    /*Applying curl options to our curl instance*/
+    curl_setopt_array($curl,$options);
+
+    /*Executing the call*/
+    $result=curl_exec($curl);
+    echo $result;
+
+?>
