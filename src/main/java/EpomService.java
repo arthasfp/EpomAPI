@@ -34,7 +34,14 @@ public class EpomService {
 //        epomService.disableSecuritySettingsForPlacement(10314);
 //        epomService.updateSecuritySettingsForPlacement(10314, false, "2016-10-05", "2016-10-06", 24, false, "2016-10-05", "2016-10-06", 5.0, 50);
 //        epomService.getSecuritySettingsForPlacement(10314);
-        epomService.deletePlacementBidFloor(10314, "UA");
+//        epomService.deletePlacementBidFloor(10314, "UA");
+
+        PlacementPiggybackAPI placementPiggybackAPI = new PlacementPiggybackAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+//        placementPiggybackAPI.enablePlacementPiggyback(10314);
+//        placementPiggybackAPI.disablePlacementPiggyback(10314);
+//        placementPiggybackAPI.savePlacementPiggyback(10314, PiggybackType.URL, "https://epom.com");
+        placementPiggybackAPI.getPlacementPiggyback(10314);
+
     }
 
 
