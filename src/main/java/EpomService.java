@@ -40,7 +40,11 @@ public class EpomService {
 //        placementPiggybackAPI.enablePlacementPiggyback(10314);
 //        placementPiggybackAPI.disablePlacementPiggyback(10314);
 //        placementPiggybackAPI.savePlacementPiggyback(10314, PiggybackType.URL, "https://epom.com");
-        placementPiggybackAPI.getPlacementPiggyback(10314);
+//        placementPiggybackAPI.getPlacementPiggyback(10314);
+
+        PlacementRulesAPI placementRulesAPI = new PlacementRulesAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+//        placementRulesAPI.enablePlacementRules(10314);
+        placementRulesAPI.disablePlacementRules(10314);
 
     }
 
