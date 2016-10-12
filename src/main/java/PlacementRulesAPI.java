@@ -56,6 +56,29 @@ public class PlacementRulesAPI {
         inputStream.close();
     }
 
+    /**
+     * Add new Rules group for Placement.
+     * The ID of placement, ruleIds, include, operator must be specified as method's param.
+     * ruleIds – array of Rules identifier.
+     * include – true if Rule should be included; false if Rule should be excluded.
+     * operator – AND/OR operator
+     *
+     */
+
+    public void addPlacementRulesGroup(int placementId, int ruleIds, boolean include, Operator operator) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/rules/placement/" + placementId + "/add.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
+        + "&ruleIds=" + ruleIds + "&include=" + include + "&operator=" + operator);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
 
 
     private void getVerifierForConnection(HttpsURLConnection conn) {
