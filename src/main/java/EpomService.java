@@ -47,6 +47,8 @@ public class EpomService {
 //        placementRulesAPI.enablePlacementRules(10314);
 //        placementRulesAPI.disablePlacementRules(10314);
 //        placementRulesAPI.addPlacementRulesGroup(10314, 12, true, Operator.AND);
+//        placementRulesAPI.removePlacementRulesGroup(10314, 23345);
+//        placementRulesAPI.returnPlacementRulesGroup(10314);
     }
 
 

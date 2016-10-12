@@ -60,7 +60,7 @@ public class PlacementRulesAPI {
     /**
      * Add new Rules group for Placement.
      * The ID of placement, ruleIds, include, operator must be specified as method's param.
-     * ruleIds – array of Rules identifier.
+     * ruleIds – array(????) of Rules identifier.
      * include – true if Rule should be included; false if Rule should be excluded.
      * operator – AND/OR operator
      *
@@ -80,6 +80,45 @@ public class PlacementRulesAPI {
         inputStream.close();
     }
 
+    /**
+     * Remove Rule group for Placement.
+     * The ID of placement, ruleGroupId must be specified as method's param.
+     * ruleGroupId – ID of Rule group.
+     *
+     */
+
+    public void removePlacementRulesGroup(int placementId, int ruleGroupId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/rules/placement/" + placementId + "/remove.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
+                + "&ruleGroupId=" + ruleGroupId);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    /**
+     * Return all Rule groups for Placement.
+     * The ID of placement must be specified as method's param.
+     *
+     */
+
+    public void returnPlacementRulesGroup(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/rules/placement/" + placementId + "/get.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
 
     private void getVerifierForConnection(HttpsURLConnection conn) {
