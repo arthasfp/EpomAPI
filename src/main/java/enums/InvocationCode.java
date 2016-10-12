@@ -1,3 +1,5 @@
+package enums;
+
 public enum InvocationCode {
     IFRAME_SYNC,
     IFRAME_ASYNC,

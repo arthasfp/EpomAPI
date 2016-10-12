@@ -1,3 +1,4 @@
+import enums.PiggybackType;
 import org.apache.commons.io.IOUtils;
 
 import javax.net.ssl.HostnameVerifier;

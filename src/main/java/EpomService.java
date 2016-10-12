@@ -1,3 +1,4 @@
+import enums.*;
 import org.apache.commons.io.IOUtils;
 
 import javax.net.ssl.*;
@@ -45,7 +46,7 @@ public class EpomService {
         PlacementRulesAPI placementRulesAPI = new PlacementRulesAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
 //        placementRulesAPI.enablePlacementRules(10314);
 //        placementRulesAPI.disablePlacementRules(10314);
-        placementRulesAPI.addPlacementRulesGroup(10314, 12, true, Operator.AND);
+//        placementRulesAPI.addPlacementRulesGroup(10314, 12, true, Operator.AND);
     }
 
 
