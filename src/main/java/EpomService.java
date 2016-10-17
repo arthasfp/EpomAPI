@@ -54,6 +54,11 @@ public class EpomService {
 //        placementPricingAPI.setPlacementPricing(10315, PaymentModel.FIXED_PRICE, PaymentModel.CPC); ------!!!!!!!!!!!!!
 //        placementPricingAPI.updateCountryPricing(10315, "US", 11.0, 0);
 //        placementPricingAPI.removeCountryPricing(10315, "US", 0);
+
+        DaisyChainingAPI daisyChainingAPI = new DaisyChainingAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+//        daisyChainingAPI.getDaisyChaining(10315);
+//        daisyChainingAPI.setDaisyChainingPriority(10315,4423,1404,2);
+
     }
 
 
