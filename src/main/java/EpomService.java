@@ -49,6 +49,11 @@ public class EpomService {
 //        placementRulesAPI.addPlacementRulesGroup(10314, 12, true, Operator.AND);
 //        placementRulesAPI.removePlacementRulesGroup(10314, 23345);
 //        placementRulesAPI.returnPlacementRulesGroup(10314);
+
+        PlacementPricingAPI placementPricingAPI = new PlacementPricingAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+//        placementPricingAPI.setPlacementPricing(10315, PaymentModel.FIXED_PRICE, PaymentModel.CPC); ------!!!!!!!!!!!!!
+//        placementPricingAPI.updateCountryPricing(10315, "US", 11.0, 0);
+//        placementPricingAPI.removeCountryPricing(10315, "US", 0);
     }
 
 

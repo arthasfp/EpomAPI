@@ -1,0 +1,50 @@
+<?php
+define("DEBUG",false);
+
+/*Initiating username and password variables, generating current timestamp and hash*/
+$username = "berezhnyi1234";
+$password = "211111";
+$timestamp  = round(microtime(true) * 1000);
+$hash = md5(md5($password).$timestamp);
+
+
+/*Specifying API call URL*/
+$url = "https://n101.epom.com/rest-api/campaign/create.do";
+
+/*Specifying request parameters*/
+$post_data = array(
+    "name" => "TestAPI",
+    "advertiserId" => 494,
+    "active" => true,
+    "onlyThisCampaignOnPage" => false,
+    "onlyOneBannerPerPage" => false,
+    "weight" => 15,
+    "priority" => "STANDARD_LOW",
+    "hash" => $hash,
+    "timestamp" => $timestamp,
+    "username" => $username
+
+);
+
+/*Specifying curl options*/
+$options = array(
+    CURLOPT_URL => $url,
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_POST => true, // POST method is used
+    CURLOPT_POSTFIELDS => http_build_query($post_data), //POST request body parameters
+    CURLOPT_HTTPHEADER => array('Content-type: application/x-www-form-urlencoded'), //This header is mandatory in case if parameters are passed in request body.
+    CURLOPT_RETURNTRANSFER => true
+);
+
+/*Connection initiation*/
+$curl = curl_init();
+
+/*Applying curl options to our curl instance*/
+curl_setopt_array($curl,$options);
+
+/*Executing the call*/
+$result=curl_exec($curl);
+echo $result;
+
+
+?>
