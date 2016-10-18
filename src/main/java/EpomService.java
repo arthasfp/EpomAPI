@@ -59,15 +59,16 @@ public class EpomService {
 //        daisyChainingAPI.getDaisyChaining(10315);
 //        daisyChainingAPI.setDaisyChainingPriority(10315,4423,1404,2);
 
-    }
+        GeneralAnalyticsReportAPI generalAnalyticsReportAPI = new GeneralAnalyticsReportAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+        generalAnalyticsReportAPI.getAnalyticsReport(Format.JSON);
 
+    }
 
     /**
      * Doesn't work
      * 400 status
      *
      */
-
 
     private void createStandartPlacement(String name, int zoneId) throws NoSuchAlgorithmException, IOException {
         URL url = new URL(user.getNetwork() + "/rest-api/placements/update/standard.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()

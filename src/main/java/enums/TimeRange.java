@@ -1,0 +1,8 @@
+package enums;
+
+/**
+ * Created by user8 on 18.10.2016.
+ */
+public enum TimeRange {
+    TODAY, YESTERDAY, CURRENT_WEEK, CURRENT_MONTH, LAST_7_DAYS, LAST_30_DAYS, LAST_MONTH, LAST_3_MONTH, LAST_6_MONTH, CURRENT_YEAR, LAST_YEAR, CUSTOM
+}
