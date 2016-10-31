@@ -124,6 +124,47 @@ public class PlacementTargetingAPI {
         inputStream.close();
     }
 
+    /**
+     *
+     * Get the Targeting types for the given Placement.
+     * The ID of placement and targeting must be specified as method's param.
+     *
+     */
+
+    public void getPlacementTargetingTypes(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/types.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    /**
+     *
+     * Get available Browser values for Browser Targeting type.
+     * The ID of placement and targeting must be specified as method's param.
+     *
+     */
+
+    public void getBrowsers (int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/browsers/values.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+
 
 
 

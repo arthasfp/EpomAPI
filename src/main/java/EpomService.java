@@ -68,6 +68,8 @@ public class EpomService {
 //        placementTargetingAPI.removePlacementTargeting(10315, 10093);
 //        placementTargetingAPI.getPlacementTargeting(10315, 10094);
 //        placementTargetingAPI.getAllPlacementTargetings(10315);
+//        placementTargetingAPI.getPlacementTargetingTypes(10315);
+//        placementTargetingAPI.getBrowsers(10315);
 
 
     }
