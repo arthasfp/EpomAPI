@@ -70,6 +70,17 @@ public class EpomService {
 //        placementTargetingAPI.getAllPlacementTargetings(10315);
 //        placementTargetingAPI.getPlacementTargetingTypes(10315);
 //        placementTargetingAPI.getBrowsers(10315);
+//        placementTargetingAPI.getMobileCarriers(10315);
+//        placementTargetingAPI.getFirefoxVersions(10315);
+//        placementTargetingAPI.getChromeVersions(10315);
+//        placementTargetingAPI.getSafariVersions(10315);
+//        placementTargetingAPI.getIEVersions(10315);
+//        placementTargetingAPI.getOSValues(10315);
+//        placementTargetingAPI.getOSVersions(10315,"WINDOWS");
+//        placementTargetingAPI.getDeviceFormats(10315);
+//        placementTargetingAPI.getDeviceVendors(10315);
+//        placementTargetingAPI.getResolutions(10315);
+//        placementTargetingAPI.getRegions(10315, "UK");
 
 
     }
