@@ -81,6 +81,8 @@ public class EpomService {
 //        placementTargetingAPI.getDeviceVendors(10315);
 //        placementTargetingAPI.getResolutions(10315);
 //        placementTargetingAPI.getRegions(10315, "UK");
+//        placementTargetingAPI.getCities(10315, "UK", "England");
+        placementTargetingAPI.getLanguages(10315);
 
 
     }

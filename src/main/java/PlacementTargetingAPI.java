@@ -335,7 +335,7 @@ public class PlacementTargetingAPI {
 
     /**
      * Get available regions for the given country.
-     * The ID of placement and targeting must be specified as method's param.
+     * The ID of placement and countryCode must be specified as method's param.
      */
 
     public void getRegions(int placementId, String countryCode) throws NoSuchAlgorithmException, IOException {
@@ -352,6 +352,43 @@ public class PlacementTargetingAPI {
         inputStream.close();
     }
 
+    /**
+     * Get available City names for given Country and Region.
+     * The ID of placement, coutryCode, regionName must be specified as method's param.
+     */
+
+    public void getCities(int placementId, String countryCode, String regionName) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/country/region/city/values.do?hash=" + getHash() + "&timestamp=" + getTimestamp()
+                + "&username=" + user.getUsername() + "&countryCode=" + countryCode + "&regionName=" + regionName);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    /**
+     * Get available languages.
+     * The ID of placement must be specified as method's param.
+     */
+
+    public void getLanguages(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/language/values.do?hash=" + getHash() + "&timestamp=" + getTimestamp()
+                + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
 
 
