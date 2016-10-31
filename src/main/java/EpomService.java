@@ -60,7 +60,11 @@ public class EpomService {
 //        daisyChainingAPI.setDaisyChainingPriority(10315,4423,1404,2);
 
         GeneralAnalyticsReportAPI generalAnalyticsReportAPI = new GeneralAnalyticsReportAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
-        generalAnalyticsReportAPI.getAnalyticsReport(Format.JSON);
+//        generalAnalyticsReportAPI.getAnalyticsReport(Format.JSON);
+
+        PlacementTargetingAPI placementTargetingAPI = new PlacementTargetingAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
+//        placementTargetingAPI.enablePlacementTargeting(10315);
+//        placementTargetingAPI.disablePlacementTargeting(10315);
 
     }
 
