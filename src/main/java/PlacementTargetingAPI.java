@@ -63,8 +63,66 @@ public class PlacementTargetingAPI {
         inputStream.close();
     }
 
+    /**
+     *
+     * Removes Targeting by its ID for the given Placement.
+     * The ID of placement and targeting must be specified as method's param.
+     *
+     */
+
+    public void removePlacementTargeting(int placementId, int targetId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/" + targetId + "/delete.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("DELETE");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
 
+    /**
+     *
+     * Get the Targeting by its ID for the given Placement.
+     * The ID of placement and targeting must be specified as method's param.
+     *
+     */
+
+    public void getPlacementTargeting(int placementId, int targetId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targeting/" + targetId + ".do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
+
+    /**
+     *
+     * Get all Targetings by Placement ID.
+     * The ID of placement and targeting must be specified as method's param.
+     *
+     */
+
+    public void getAllPlacementTargetings(int placementId) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + "/rest-api/placement/" + placementId + "/targetings.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername());
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
 
 

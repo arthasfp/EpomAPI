@@ -65,6 +65,10 @@ public class EpomService {
         PlacementTargetingAPI placementTargetingAPI = new PlacementTargetingAPI(new User("berezhnyi1234", "211111", "https://n101.epom.com"));
 //        placementTargetingAPI.enablePlacementTargeting(10315);
 //        placementTargetingAPI.disablePlacementTargeting(10315);
+//        placementTargetingAPI.removePlacementTargeting(10315, 10093);
+//        placementTargetingAPI.getPlacementTargeting(10315, 10094);
+//        placementTargetingAPI.getAllPlacementTargetings(10315);
+
 
     }
 
