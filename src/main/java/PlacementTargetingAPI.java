@@ -390,7 +390,26 @@ public class PlacementTargetingAPI {
         inputStream.close();
     }
 
+    /**
+     *
+     * Sets Browser Targeting for the Placement (and enable if it was disabled).
+     *
+     *
+     */
 
+    public void createBrowserTargeting(int placementId, String rule, String browser, String relation, double browserVersion) throws NoSuchAlgorithmException, IOException {
+        URL url = new URL(user.getNetwork() + " /rest-api/placement/" + placementId + "/targeting/create.do?hash=" + getHash() + "&timestamp=" + getTimestamp() + "&username=" + user.getUsername()
+                + "&rule=" + rule + "&browser=" + browser + "&relation=" + relation + "&browserVersion=" + browserVersion);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        getVerifierForConnection(conn);
+        System.out.println(conn.getResponseCode());
+        InputStream inputStream = conn.getInputStream();
+        String myString = IOUtils.toString(inputStream, "UTF-8");
+        System.out.println(myString);
+        conn.disconnect();
+        inputStream.close();
+    }
 
 
 
@@ -414,7 +433,7 @@ public class PlacementTargetingAPI {
         return hash;
     }
 
-    private String getMD5(String data) throws NoSuchAlgorithmException {
+    public String getMD5(String data) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(data.getBytes());
         byte byteData[] = md.digest();
